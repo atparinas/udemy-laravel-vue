@@ -19,4 +19,19 @@ class Question extends Model
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = str_slug($value);
     }
+
+    public function getUrlAttribute()
+    {
+        return route("questions.show", $this->id);
+    }
+
+    //Function Accessor in CamelCase but should be snake case when called in the views
+    public function getCreatedDateAttribute()
+    {
+        /**
+         * Date can be also presented in other format
+         * example: created_at->format("d/m/Y")
+         */
+        return $this->created_at->diffForHumans();
+    }
 }

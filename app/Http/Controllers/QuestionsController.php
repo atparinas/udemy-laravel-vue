@@ -14,7 +14,11 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->paginate(5);
+        /**
+         * Eager load the related Model (User) to avoid the n+1 query problem
+         * the 'user' is what is defined in the relationship function in the model
+          */
+        $questions = Question::with('user')->latest()->paginate(5);
 
         return view('questions.index', compact('questions'));
     }
