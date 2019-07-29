@@ -36,6 +36,15 @@ class Answer extends Model
           
       }
 
+      public function getCreatedDateAttribute()
+    {
+        /**
+         * Date can be also presented in other format
+         * example: created_at->format("d/m/Y")
+         */
+        return $this->created_at->diffForHumans();
+    }
+
 
       /**
        * Events
