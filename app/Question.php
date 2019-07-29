@@ -10,10 +10,24 @@ class Question extends Model
     
     protected $fillable = ['title', 'body'];
 
+    /**
+     * Relationships
+     */
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
+
+    /**
+     * Mutatators
+     */
 
     public function setTitleAttribute($value)
     {
@@ -21,12 +35,17 @@ class Question extends Model
         $this->attributes['slug'] = str_slug($value);
     }
 
+    /**
+     * Accessors
+     * Function Accessor in CamelCase but should be snake case when called in the views
+     */
+
     public function getUrlAttribute()
     {
         return route("questions.show", $this->slug);
     }
 
-    //Function Accessor in CamelCase but should be snake case when called in the views
+
     public function getCreatedDateAttribute()
     {
         /**
@@ -38,7 +57,7 @@ class Question extends Model
 
     public function getStatusAttribute()
     {
-        if($this->answers > 0){
+        if($this->answers_count > 0){
             if($this->best_answer_id){
                 return "answered_accepted";
             }
@@ -53,4 +72,6 @@ class Question extends Model
     {
         return Parsedown::instance()->text($this->body);
     }
+
+
 }
