@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Parsedown;
 
 class Question extends Model
 {
@@ -22,7 +23,7 @@ class Question extends Model
 
     public function getUrlAttribute()
     {
-        return route("questions.show", $this->id);
+        return route("questions.show", $this->slug);
     }
 
     //Function Accessor in CamelCase but should be snake case when called in the views
@@ -46,5 +47,10 @@ class Question extends Model
         }
 
         return "unanswered";
+    }
+
+    public function getBodyHtmlAttribute()
+    {
+        return Parsedown::instance()->text($this->body);
     }
 }
