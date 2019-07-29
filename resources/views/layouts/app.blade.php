@@ -76,5 +76,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="https://kit.fontawesome.com/677500d7dc.js"></script>
 </body>
 </html>
