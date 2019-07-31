@@ -52,6 +52,14 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class);
     }
 
+    public function favorites()
+    {
+        /**
+         * With timestaps will create an updated_at and created_at entry.
+         * 
+         */
+        return $this->belongsToMany(Question::class, 'favorites')->withTimestamps();
+    }
 
     /**
      * Accessors

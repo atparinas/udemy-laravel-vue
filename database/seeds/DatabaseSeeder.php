@@ -1,29 +1,24 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\User;
-use App\Question;
-use App\Answer;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     * 
+     * running a sepecific seeder
+     * php artisan db:seed --class=FavoritesTableSeeder 
      *
      * @return void
      */
     public function run()
     {
-        //Need to chain each method and pass in callback because question needs to be associated with user
-        factory(User::class, 3)->create()->each(function($user){
-            $user->questions()->saveMany(
-                factory(Question::class, rand(1, 5))->make()
-            )->each(function($question){
-                $question->answers()->saveMany(
-                    factory(Answer::class, rand(1,5))->make()
-                );
-            });
-        });
+
+        $this->call([
+            UsersQuestionsAnswersTableSeeder::class,
+            FavoritesTableSeeder::class
+        ]);
         
     }
 }

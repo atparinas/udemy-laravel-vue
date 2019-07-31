@@ -24,6 +24,14 @@ class Question extends Model
         return $this->hasMany(Answer::class);
     }
 
+    public function favorites()
+    {
+        /**
+         * With timestaps will create an updated_at and created_at entry.
+         * 
+         */
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
 
     /**
      * Mutatators
@@ -73,6 +81,16 @@ class Question extends Model
         return Parsedown::instance()->text($this->body);
     }
 
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
+    }
     /**
      * Other Methods
      */
@@ -81,6 +99,11 @@ class Question extends Model
     {
         $this->best_answer_id = $answer->id;
         $this->save();
+    }
+
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->count() > 0;
     }
 
 }
