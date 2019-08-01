@@ -9,14 +9,25 @@
                 @foreach ($answers as $answer)
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a title="This answer is usefull" class="vote-up">
+                            <a title="This answer is usefull"  class="vote-up {{Auth::guest() ? 'off' : ''}}"
+                                onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{$answer->id}}').submit()" >
                                 <i class="fas fa-caret-up fa-2x"></i>
                             </a>
-                            <span class="votes-count">10</span>
-                            <a title="This answer is not usefull" class="vote-down off">
+                            <form action="/answers/{{ $answer->id }}/vote" 
+                                id="up-vote-answer-{{$question->id}}" method="POST" style="display:none" >
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+                            <span class="votes-count">{{ $answer->votes_count }}</span>
+                            <a title="This answer is not usefull"  class="vote-up {{Auth::guest() ? 'off' : ''}}"
+                            onclick="event.preventDefault(); document.getElementById('down-vote-question-{{$question->id}}').submit()">
                                 <i class="fas fa-caret-down fa-2x"></i>
                             </a>
-
+                            <form action="/answers/{{ $question->id }}/vote" 
+                                id="down-vote-question-{{$answer->id}}" method="POST" style="display:none" >
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
                             @can('accept', $answer)
                                 <a title="mark this answer as best" class="{{ $answer->status }} mt-2"
                                     onclick="event.preventDefault(); document.getElementById('accept-answer-{{$answer->id}}').submit()" >

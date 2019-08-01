@@ -14,19 +14,22 @@ class Answer extends Model
      * Relationships
      */
 
-     public function question()
-     {
-         return $this->belongsTo(Question::class);
-     }
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 
 
-     public function user()
-     {
-         return $this->belongsTo(User::class);
-     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
-
+    public function votes()
+    {
+        return $this->morphToMany(User::class, 'votable');
+    }
 
      /**
       * Accessor
@@ -94,5 +97,15 @@ class Answer extends Model
      public function isBest()
      {
          return $this->id === $this->question->best_answer_id;
+     }
+
+     public function upVotes()
+     {
+         return $this->votes()->wherePivot('vote', 1);
+     }
+ 
+     public function downVotes()
+     {
+         return $this->votes()->wherePivot('vote', -1);
      }
 }
