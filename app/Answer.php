@@ -18,7 +18,7 @@ class Answer extends Model
      * need to add the accessor in append to make it visible in model representation 
      * outside of Laravel
      */
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'body_html'];
 
     
     /**

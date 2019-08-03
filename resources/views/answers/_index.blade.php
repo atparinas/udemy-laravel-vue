@@ -1,4 +1,7 @@
-<div class="row mt-5">
+{{-- directives will remain in the element until
+associated view instance has finished compilation
+need to put in the proper css rules for v-cloak --}}
+<div class="row mt-5" v-cloak>
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
