@@ -15,6 +15,13 @@ class Question extends Model
     
     protected $fillable = ['title', 'body'];
 
+
+    /**
+     * need to add the accessor in append to make it visible in model representation 
+     * outside of Laravel
+     */
+    protected $appends = ['created_date'];
+
     /**
      * Relationships
      */

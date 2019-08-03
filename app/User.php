@@ -20,6 +20,12 @@ class User extends Authenticatable
     ];
 
     /**
+     * need to add the accessor in append to make it visible in model representation 
+     * outside of Laravel
+     */
+    protected $appends = ['url', 'avatar'];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array

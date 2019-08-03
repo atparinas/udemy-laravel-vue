@@ -1,5 +1,5 @@
 <div class="float-right">
-    <span class="text-muted">{{ $label . " " . $answer->created_date }} </span>
+    <span class="text-muted">{{ $label . " " . $model->created_date }} </span>
     <div class="media mt-2">
         <a href=" {{ $model->user->url}}" class="pr-2">
             <img src="{{ $model->user->avatar }}" alt="user avatar">
